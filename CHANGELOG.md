@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.3.99] - 2026-05-28
+
+Terminal relocation release on the legacy `org.javai` coordinates.
+
+The published POM contains a Maven `<relocation>` directive pointing
+at `org.mavai:outcome:1.0.0-alpha1`. Maven and Gradle honour this
+automatically: consumers resolving `org.javai:outcome:0.3.99` are
+redirected to `org.mavai:outcome:1.0.0-alpha1` with a deprecation
+warning.
+
+No further releases will be published under `org.javai`. Consumers
+should update their dependency coordinates explicitly to
+`org.mavai:outcome:1.0.0-alpha1` or later; the relocation POM is a
+safety net for unmaintained consumers.
+
+The jar / sources / javadoc artifacts in this release are the
+functional `0.3.x` code under `org.javai.outcome.*`; consumers who
+explicitly pin this GAV (bypassing relocation resolution) get a
+working library, not an empty placeholder.
+
 ## [0.3.0] - 2026-05-11
 
 ### Added

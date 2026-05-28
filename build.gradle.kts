@@ -50,12 +50,12 @@ mavenPublishing {
     pom {
         name.set("Outcome")
         description.set("A framework for building action plans based on natural language inputs")
-        url.set("https://github.com/javai-org/outcome")
+        url.set("https://github.com/mavai-org/outcome")
 
         licenses {
             license {
                 name.set("Attribution Required License (ARL-1.0)")
-                url.set("https://github.com/javai-org/outcome/blob/main/LICENSE")
+                url.set("https://github.com/mavai-org/outcome/blob/main/LICENSE")
             }
         }
 
@@ -68,9 +68,29 @@ mavenPublishing {
         }
 
         scm {
-            url.set("https://github.com/javai-org/outcome")
-            connection.set("scm:git:git://github.com/javai-org/outcome.git")
-            developerConnection.set("scm:git:ssh://github.com/javai-org/outcome.git")
+            url.set("https://github.com/mavai-org/outcome")
+            connection.set("scm:git:git://github.com/mavai-org/outcome.git")
+            developerConnection.set("scm:git:ssh://github.com/mavai-org/outcome.git")
+        }
+
+        // Terminal relocation release: tell Maven/Gradle that consumers
+        // resolving `org.javai:outcome:0.3.99` should auto-redirect to
+        // `org.mavai:outcome:1.0.0-alpha1` with a deprecation warning.
+        // The jar/sources/javadoc artifacts are still published (working
+        // 0.3.x code under `org.javai.outcome.*`), so anyone who explicitly
+        // pins this GAV gets a functional library; the relocation block
+        // only affects POM-driven resolution.
+        withXml {
+            val root = asNode()
+            val dm = root.appendNode("distributionManagement")
+            val reloc = dm.appendNode("relocation")
+            reloc.appendNode("groupId", "org.mavai")
+            reloc.appendNode("artifactId", "outcome")
+            reloc.appendNode("version", "1.0.0-alpha1")
+            reloc.appendNode(
+                "message",
+                "outcome has moved to org.mavai. See https://mavai.org."
+            )
         }
     }
 }
