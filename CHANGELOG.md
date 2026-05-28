@@ -7,12 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
-## [1.0.0] - 2026-05-28
+## [1.0.0-alpha1] - 2026-05-28
+
+The first release under the new coordinates. The `1.0.0` major bump
+marks the coordinate / package / module rename, not API
+stabilisation; subsequent alpha releases may continue to evolve the
+API. The `1.0.0` milestone proper is reserved for the API-stable
+cut.
 
 ### Changed
 - **Maven coordinates moved from `org.javai` to `org.mavai`.** New
-  coordinate: `org.mavai:outcome:1.0.0`. The artifactId (`outcome`) is
-  unchanged.
+  coordinate: `org.mavai:outcome:1.0.0-alpha1`. The artifactId
+  (`outcome`) is unchanged.
 - **Java package renamed `org.javai.outcome` → `org.mavai.outcome`.**
   Affects every public type. Consumers must update their imports.
 - **JPMS module name renamed `org.javai.outcome` → `org.mavai.outcome`.**
@@ -28,7 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Migration
 A final `org.javai:outcome:0.3.99` release ships a Maven relocation
-POM that auto-redirects to `org.mavai:outcome:1.0.0` with a
+POM that auto-redirects to `org.mavai:outcome:1.0.0-alpha1` with a
 deprecation warning. Consumers should update their dependency
 coordinates explicitly; the relocation POM is a safety net, not a
 permanent solution.
@@ -80,8 +86,8 @@ natural language inputs.
 - `DefectClassifier` for mapping exceptions to failure types
 - Static convenience methods for low-ceremony usage
 
-[Unreleased]: https://github.com/mavai-org/outcome/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/mavai-org/outcome/compare/v0.3.0...v1.0.0
+[Unreleased]: https://github.com/mavai-org/outcome/compare/v1.0.0-alpha1...HEAD
+[1.0.0-alpha1]: https://github.com/mavai-org/outcome/compare/v0.3.0...v1.0.0-alpha1
 [0.3.0]: https://github.com/javai-org/outcome/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/javai-org/outcome/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/javai-org/outcome/releases/tag/v0.1.0

@@ -315,13 +315,13 @@ Defects (unchecked exceptions) propagate to the top of the stack where `Operatio
 **Gradle (Kotlin DSL):**
 
 ```kotlin
-implementation("org.mavai:outcome:1.0.0")
+implementation("org.mavai:outcome:1.0.0-alpha1")
 ```
 
 **Gradle (Groovy DSL):**
 
 ```groovy
-implementation 'org.mavai:outcome:1.0.0'
+implementation 'org.mavai:outcome:1.0.0-alpha1'
 ```
 
 **Maven:**
@@ -330,7 +330,7 @@ implementation 'org.mavai:outcome:1.0.0'
 <dependency>
     <groupId>org.mavai</groupId>
     <artifactId>outcome</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.0-alpha1</version>
 </dependency>
 ```
 
