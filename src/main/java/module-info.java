@@ -1,5 +1,5 @@
 /**
- * The org.javai.outcome library.
+ * The org.mavai.outcome library.
  *
  * <p>A small sealed-type domain for representing the success-or-failure
  * outcome of a computation as data rather than as exceptions, plus
@@ -10,15 +10,15 @@
  * to support punit's JPMS experiment. Releasing it requires a new
  * outcome version.
  */
-module org.javai.outcome {
-    exports org.javai.outcome;
-    exports org.javai.outcome.boundary;
-    exports org.javai.outcome.ops;
-    exports org.javai.outcome.ops.log4j;
-    exports org.javai.outcome.ops.metrics;
-    exports org.javai.outcome.ops.slack;
-    exports org.javai.outcome.ops.teams;
-    exports org.javai.outcome.retry;
+module org.mavai.outcome {
+    exports org.mavai.outcome;
+    exports org.mavai.outcome.boundary;
+    exports org.mavai.outcome.ops;
+    exports org.mavai.outcome.ops.log4j;
+    exports org.mavai.outcome.ops.metrics;
+    exports org.mavai.outcome.ops.slack;
+    exports org.mavai.outcome.ops.teams;
+    exports org.mavai.outcome.retry;
 
     requires java.net.http;
     requires java.sql;

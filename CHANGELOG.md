@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-05-28
+
+### Changed
+- **Maven coordinates moved from `org.javai` to `org.mavai`.** New
+  coordinate: `org.mavai:outcome:1.0.0`. The artifactId (`outcome`) is
+  unchanged.
+- **Java package renamed `org.javai.outcome` → `org.mavai.outcome`.**
+  Affects every public type. Consumers must update their imports.
+- **JPMS module name renamed `org.javai.outcome` → `org.mavai.outcome`.**
+  Modular consumers must update `requires org.javai.outcome` →
+  `requires org.mavai.outcome` in their own `module-info.java`.
+- **Repository moved `github.com/javai-org/outcome` →
+  `github.com/mavai-org/outcome`.** The old URL 301-redirects forever;
+  Maven `<scm>` and POM `<url>` now reference the new home.
+- **Version bumped to `1.0.0`.** The coordinate/package/module rename
+  is a breaking change for consumers; the major bump marks the
+  relocation, not an API change. The sealed-type shape
+  (`Outcome<T>` / `Ok<T>` / `Fail<T>`) is preserved verbatim.
+
+### Migration
+A final `org.javai:outcome:0.3.99` release ships a Maven relocation
+POM that auto-redirects to `org.mavai:outcome:1.0.0` with a
+deprecation warning. Consumers should update their dependency
+coordinates explicitly; the relocation POM is a safety net, not a
+permanent solution.
+
 ## [0.3.0] - 2026-05-11
 
 ### Added
@@ -54,7 +80,8 @@ natural language inputs.
 - `DefectClassifier` for mapping exceptions to failure types
 - Static convenience methods for low-ceremony usage
 
-[Unreleased]: https://github.com/javai-org/outcome/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/mavai-org/outcome/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/mavai-org/outcome/compare/v0.3.0...v1.0.0
 [0.3.0]: https://github.com/javai-org/outcome/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/javai-org/outcome/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/javai-org/outcome/releases/tag/v0.1.0

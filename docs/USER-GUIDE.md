@@ -821,7 +821,7 @@ return switch (outcome) {
 ## Package Structure
 
 ```
-org.javai.outcome
+org.mavai.outcome
 ├── Outcome, Failure, FailureType, FailureId
 │
 ├── boundary/
@@ -854,22 +854,22 @@ org.javai.outcome
 **Gradle (Kotlin DSL):**
 
 ```kotlin
-implementation("org.javai:outcome:0.2.0")
+implementation("org.mavai:outcome:1.0.0")
 ```
 
 **Gradle (Groovy DSL):**
 
 ```groovy
-implementation 'org.javai:outcome:0.2.0'
+implementation 'org.mavai:outcome:1.0.0'
 ```
 
 **Maven:**
 
 ```xml
 <dependency>
-    <groupId>org.javai</groupId>
+    <groupId>org.mavai</groupId>
     <artifactId>outcome</artifactId>
-    <version>0.1.0</version>
+    <version>1.0.0</version>
 </dependency>
 ```
 

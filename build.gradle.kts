@@ -8,7 +8,7 @@ signing {
     useGpgCmd()
 }
 
-group = "org.javai"
+group = "org.mavai"
 version = property("outcomeVersion") as String
 
 java {
@@ -45,17 +45,17 @@ mavenPublishing {
     publishToMavenCentral()
     signAllPublications()
 
-    coordinates("org.javai", "outcome", version.toString())
+    coordinates("org.mavai", "outcome", version.toString())
 
     pom {
         name.set("Outcome")
         description.set("A framework for building action plans based on natural language inputs")
-        url.set("https://github.com/javai-org/outcome")
+        url.set("https://github.com/mavai-org/outcome")
 
         licenses {
             license {
                 name.set("Attribution Required License (ARL-1.0)")
-                url.set("https://github.com/javai-org/outcome/blob/main/LICENSE")
+                url.set("https://github.com/mavai-org/outcome/blob/main/LICENSE")
             }
         }
 
@@ -68,9 +68,9 @@ mavenPublishing {
         }
 
         scm {
-            url.set("https://github.com/javai-org/outcome")
-            connection.set("scm:git:git://github.com/javai-org/outcome.git")
-            developerConnection.set("scm:git:ssh://github.com/javai-org/outcome.git")
+            url.set("https://github.com/mavai-org/outcome")
+            connection.set("scm:git:git://github.com/mavai-org/outcome.git")
+            developerConnection.set("scm:git:ssh://github.com/mavai-org/outcome.git")
         }
     }
 }
