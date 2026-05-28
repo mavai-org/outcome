@@ -41,6 +41,20 @@ tasks.test {
     }
 }
 
+// Relocation release: suppress Gradle Module Metadata so that Gradle
+// consumers fall through to the POM, where the <distributionManagement>
+// <relocation> directive is honoured. With the .module file present,
+// Gradle reads it in preference to the POM, and Gradle Module Metadata
+// has no native equivalent of Maven's relocation block — meaning
+// Gradle consumers would silently resolve the legacy jar instead of
+// auto-redirecting to org.mavai:outcome:1.0.0-alpha1. Disabling
+// metadata generation restores the redirect for Gradle consumers
+// without affecting Maven consumers (Maven never used the .module
+// file in the first place).
+tasks.withType<GenerateModuleMetadata>().configureEach {
+    enabled = false
+}
+
 mavenPublishing {
     publishToMavenCentral()
     signAllPublications()
