@@ -371,3 +371,85 @@ git branch -D <throwaway>     # discard; findings feed the real 5b PR
   `org.mavai` group. This breakage is the intended, visible consequence
   — do **not** "fix" it in isolation; Wave 5c does it as part of the
   consumer bump.
+
+---
+
+# Addendum — the `punit` pass (Wave 5b, 2026-05-29)
+
+`punit` replayed this recipe at higher stakes: a multi-module build,
+four published Maven artifacts (`punit{,-core,-report,-sentinel}`), three
+real JPMS modules, a Kotlin Gradle plugin, ~448 Java + 5 Kotlin files.
+Everything above held; what follows is what was *new or different* — read
+it before doing `punitexamples` (5c).
+
+Outcome: `org.mavai:punit*:0.9.0` live on Central; `org.javai:punit*:0.8.99`
+terminal relocation release (→ `org.mavai:*:0.9.0`) live; all green.
+
+## Version is decoupled from the move (operator decision)
+
+Unlike `outcome` (which spent its `1.0.0` on the move), punit ships the
+rename on its **natural line** — `0.9.0`, *not* a forced `1.0.0`.
+`1.0.0` stays reserved for genuine API stabilisation. The terminal
+relocation release uses the **`x.y.99` marker** convention (`0.8.99`,
+cf. outcome's `0.3.99`) — its own version is a visibly-final patch on the
+old line; the relocation **target inside the POM** is the real new
+release (`org.mavai:*:0.9.0`). Don't reuse the new version number as the
+relocation release's own version.
+
+## Multi-module sweep surface (beyond the obvious .java)
+
+The dot-form `org.javai` → `org.mavai` sweep is the easy 90%. The traps:
+
+1. **The Gradle plugin has its OWN `gradle.properties`.** It bakes its
+   version into a generated source file that drives the external
+   `punit-report` coordinate it pulls; bump it in lockstep with the root
+   or the build fails resolving `org.mavai:punit-report:<old-ver>`.
+2. **`publishToMavenLocal`-then-`build`.** The root applies its own
+   plugin, whose `punitReport` config resolves `org.mavai:punit-report`
+   from `.m2` (no dependency substitution — only `outcome` has one).
+   After a group rename `.m2` has nothing under the new group, so
+   `publishToMavenLocal` first, then `build`.
+3. **The slash-vs-dot trap.** A dot-form `org\.javai` sweep misses
+   classpath/resource string literals in **slash** form
+   (`getResourceAsStream("/org/javai/...")`, jar-entry assertions,
+   generated-source dirs, doc source-paths). But a naive slash
+   `org/javai` → `org/mavai` **corrupts `javai-org/javai-R`** (it
+   contains the substring `org/javai`!). Scope the slash pass to
+   `org/javai/punit/` with a negative lookahead for `examples`:
+   `s{org/javai/punit/(?!examples)}{org/mavai/punit/}g` — protects the
+   punitexamples doc links and never touches `javai-R`.
+4. **`META-INF/services` files are named by FQN** — rename the file *and*
+   rewrite its contents.
+5. **The ArchUnit freezing store** (`archunit_store/*` + `stored.rules`)
+   embeds class FQNs; sweep it too, or frozen violations stop matching
+   and the architecture tests go red.
+6. **Preserve the verdict-XML wire namespace** `http://javai.org/verdict/1.0`
+   — it's a cross-framework interchange id (`javai.org`, not `org.javai`),
+   not a Maven coordinate. The dot-form sweep leaves it alone; a careless
+   `javai.org` sweep would break interop.
+7. **Gitignored `CLAUDE.md`** keeps stale `org.javai` refs — it's
+   local-only, out of the published scope; leave it.
+
+## The Gradle plugin was never published → no Portal step
+
+This recipe (and the family plan) assumed a non-redirectable Gradle
+Plugin Portal release. **For punit that was moot:** the plugin is
+published *nowhere* — not on the Plugin Portal, no Central marker, no
+`com.gradle.plugin-publish` in its build. It's consumed only via
+composite `includeBuild`. So there was no Portal artifact to relocate and
+no pointer release. **Check the plugin's actual distribution channel
+before assuming a Portal step.**
+
+## Relocation build wrinkle (multi-module + a renamed dependency)
+
+The relocation release builds the **legacy** `org.javai` source off the
+pre-rename head. But punit-core depends on `outcome`, and the sibling
+`../outcome` has already moved to `org.mavai` — so the composite
+`includeBuild(../outcome)` would substitute the local `org.mavai` outcome
+and the legacy `org.javai.outcome` imports wouldn't compile. **Fix on the
+relocation branch only:** drop the `../outcome` composite block so
+`org.javai:outcome:0.3.0` resolves from Central (immutable, still
+present). The relocation-POM injection + `GenerateModuleMetadata`
+disable were applied once via an `allprojects { … }` block in the root
+build, using each publication's own `artifactId` — covers all four
+modules in one place.
