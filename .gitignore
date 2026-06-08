@@ -45,3 +45,6 @@ bin/
 
 ### Claude Code ###
 .claude/
+
+# Agent-local guidance — not tracked in this public repo.
+CLAUDE.md
